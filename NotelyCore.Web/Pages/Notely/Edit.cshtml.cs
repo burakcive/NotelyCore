@@ -10,6 +10,7 @@ using NotelyCore.Domain;
 
 namespace NotelyCore.Web.Pages.Notely
 {
+
     public class EditModel : BasePageModel
     {
         [BindProperty(SupportsGet = true)]
@@ -19,21 +20,33 @@ namespace NotelyCore.Web.Pages.Notely
         {
 
         }
-        public async Task OnGet(int noteId)
+        public async Task OnGet(int? noteId)
         {
-            Note = await Mediator.Send(new GetNoteByIdQuery(noteId));
+            if (noteId.HasValue)
+            {
+                Note = await Mediator.Send(new GetNoteByIdQuery(noteId.Value));
+            }
+            else
+            {
+                Note = new Note();
+                TempData["IsAddMode"] = true;
+            }
         }
 
         public async Task<IActionResult> OnPost()
         {
-            await Mediator.Send(new UpdateNoteCommand
+
+            await Mediator.Send(new UpsertNoteCommand
             {
                 Body = Note.Body,
                 Subject = Note.Subject,
-                NoteId = Note.NoteId
+                NoteId = Note.NoteId,
+                Priorty = Note.Priority
             });
 
             return RedirectToPage("../Index");
         }
+
+       
     }
 }

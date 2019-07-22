@@ -1,0 +1,31 @@
+﻿@using NotelyCore.Domain
+@model Note
+
+<div class="card">
+    <div class="card-header container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>@Model.Subject</h3>
+                <span>@Model.Priority</span>
+                <small>@Model.CreatedOn.ToLocalTime()</small>
+            </div>
+            <div class="col-md-2 float-right">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-primary"
+                       asp-page="./Notely/Edit"
+                       asp-route-noteId="@Model.NoteId">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <i class="btn btn-primary"
+                       onclick="deleteNote(this)"
+                       data-note-id="@Model.NoteId">
+                        <i class="fa fa-trash"></i>
+                    </i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <p>@Model.Body</p>
+    </div>
+</div>

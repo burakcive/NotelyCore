@@ -1,23 +1,39 @@
-﻿@page "{noteId:int}"
+﻿@page "{noteId:int?}"
+
+@using NotelyCore.Domain
 
 @model NotelyCore.Web.Pages.Notely.EditModel
 @{
     ViewData["Title"] = "Edit";
+    var IsAddMode = TempData.ContainsKey("IsAddMode") && (bool)TempData["IsAddMode"];
 }
 
-<h2>Edit @Model.Note.Subject</h2>
+@if (IsAddMode)
+{
+    <h2> Create a note</h2>
+}
+else
+{
+    <h2> Edit @Model.Note.Subject</h2>
+}
 
 <form method="post">
     <input type="hidden" asp-for="Note.NoteId" />
     <div class="form-group">
         <label asp-for="Note.Subject"></label>
-        <input class="form-control" asp-for="Note.Subject" placeholder="Subject" />
+        <input class="form-control" asp-for="Note.Subject" />
         <span class="text-danger" asp-validation-for="Note.Subject"></span>
     </div>
     <div class="form-group">
         <label asp-for="Note.Body"></label>
-        <textarea class="form-control" asp-for="Note.Body" placeholder="Subject"></textarea>
+        <textarea class="form-control" asp-for="Note.Body"></textarea>
         <span class="text-danger" asp-validation-for="Note.Body"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        <label asp-for="Note.Priority"></label>
+        <select asp-for="Note.Priority" asp-items="Html.GetEnumSelectList<PriortyType>()" class="form-control"></select>
+        <span class="text-danger" asp-validation-for="Note.Body"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button class="btn btn-secondary" asp-page="./Index">Discard</button>
 </form>
