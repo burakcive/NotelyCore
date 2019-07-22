@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Notely.Persistence;
 using NotelyCore.Domain;
 using System;
@@ -19,19 +20,29 @@ namespace Notely.Application.Notes.Commands
 
     public class UpdateNoteCommandHandler : IRequestHandler<UpdateNoteCommand, Unit>
     {
-        private readonly IRepository<Note> repository;
+        private readonly NotelyCoreDbContext dbContext;
 
-        public UpdateNoteCommandHandler(IRepository<Note> repository)
+        public UpdateNoteCommandHandler(NotelyCoreDbContext dbContext)
         {
-            this.repository = repository;
+            this.dbContext = dbContext;
         }
 
+     
         public async Task<Unit> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
         {
-            repository.Update(new Note {NoteId =request.NoteId, Body = request.Body, Subject = request.Subject });
-            repository.Commit();
+            var noteToUpdate = await dbContext.Notes.SingleOrDefaultAsync(n => n.NoteId == request.NoteId);
 
-            return await Task.FromResult(Unit.Value);
+            if (noteToUpdate == null)
+            {
+                throw new Exception(nameof(noteToUpdate) + " not found");
+            }
+
+            noteToUpdate.Subject = request.Subject;
+            noteToUpdate.Body = request.Body;
+
+            await dbContext.SaveChangesAsync();
+
+            return Unit.Value;
         }
     }
 }

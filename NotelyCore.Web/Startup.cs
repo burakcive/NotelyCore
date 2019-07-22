@@ -39,7 +39,7 @@ namespace NotelyCore.Web
 
             services.AddMediatR(typeof(GetNotesQueryHandler).GetTypeInfo().Assembly);
 
-            services.AddScoped<IRepository<Note>, NoteRepository>();
+            //services.AddScoped<IRepository<Note>, NoteRepository>();
             services.AddDbContextPool<NotelyCoreDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:NotelyDb"]);
