@@ -1,0 +1,23 @@
+﻿@page "{noteId:int}"
+
+@model NotelyCore.Web.Pages.Notely.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit @Model.Note.Subject</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Note.NoteId" />
+    <div class="form-group">
+        <label asp-for="Note.Subject"></label>
+        <input class="form-control" asp-for="Note.Subject" placeholder="Subject" />
+        <span class="text-danger" asp-validation-for="Note.Subject"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Note.Body"></label>
+        <textarea class="form-control" asp-for="Note.Body" placeholder="Subject"></textarea>
+        <span class="text-danger" asp-validation-for="Note.Body"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

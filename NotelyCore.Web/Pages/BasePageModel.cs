@@ -1,15 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace NotelyCore.Web.Pages
 {
     public class BasePageModel : PageModel
     {
-        public BasePageModel(IMediator mediator)
-        {
-            Mediator = mediator;
-        }
+        private IMediator _mediator;
 
-        public IMediator Mediator { get; }
+        protected IMediator Mediator => _mediator ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
     }
 }

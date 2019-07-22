@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MediatR;
 using Notely.Application.Notes.Queries;
 using NotelyCore.Domain;
 
@@ -8,7 +7,7 @@ namespace NotelyCore.Web.Pages
 {
     public class IndexModel : BasePageModel
     {
-        public IndexModel(IMediator mediator) : base(mediator)
+        public IndexModel()
         {
 
         }

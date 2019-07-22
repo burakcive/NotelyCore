@@ -8,23 +8,31 @@
 
 @foreach (var note in Model.Notes)
 {
-    <div class="panel panel-info">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header">
             <h3>@note.Subject</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <span>@note.CreatedOn</span>
             <span>@note.Priority</span>
             <p>@note.Body</p>
         </div>
-        <div class="panel-footer">           
-            <a class="btn btn-primary"
-               asp-page="./Edit"
-               asp-route-noteId="@note.NoteId">
-                <i>Edit</i>
-            </a>
+        <div class="card-footer">   
+            <div class="btn-group float-right" role="group" aria-label="Basic example">
+                <a class="btn btn-primary"
+                   asp-page="./Notely/Edit"
+                   asp-route-noteId="@note.NoteId">
+                    <i>Edit</i>
+                </a>
+                <a class="btn btn-primary"
+                   asp-page="./Notely/Delete"
+                   asp-route-noteId="@note.NoteId">
+                    <i>Delete</i>
+                </a>
+            </div>
+            
         </div>
+
     </div>
 }
-
 </div>
