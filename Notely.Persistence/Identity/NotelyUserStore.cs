@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace NotelyCore.Persistence.Identity
 {
-    public class UserStore : IUserStore<NotelyUser>, IUserPasswordStore<NotelyUser>
+    public class NotelyUserStore : IUserStore<NotelyUser>, IUserPasswordStore<NotelyUser>
     {
         private readonly NotelyCoreDbContext db;
 
-        public UserStore(NotelyCoreDbContext db)
+        public NotelyUserStore(NotelyCoreDbContext db)
         {
             this.db = db;
         }

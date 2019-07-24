@@ -44,7 +44,7 @@ namespace NotelyCore.Web
             services.AddIdentity<NotelyUser, UserRole>()
             .AddDefaultTokenProviders();
 
-            services.AddTransient<IUserStore<NotelyUser>, UserStore>();
+            services.AddTransient<IUserStore<NotelyUser>, NotelyUserStore>();
             services.AddTransient<IRoleStore<UserRole>, NotelyRoleStore>();
             services.ConfigureApplicationCookie(options =>
             {
