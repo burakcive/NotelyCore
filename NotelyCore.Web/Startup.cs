@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Notely.Application.Notes.Queries;
+using NotelyCore.Domain.Identity;
 using NotelyCore.Persistence;
 using NotelyCore.Persistence.Identity;
 
@@ -58,7 +59,7 @@ namespace NotelyCore.Web
                  options.Conventions.AuthorizePage("/Index");
                  options.Conventions.AuthorizePage("/Notely/Edit");
              }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        
+
             services.AddAntiforgery(options => options.HeaderName = "MY-XSRF-TOKEN");
         }
 
@@ -68,15 +69,6 @@ namespace NotelyCore.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                if (signInManager.UserManager.FindByNameAsync("dev").Result == null)
-                {
-                    var result = signInManager.UserManager.CreateAsync(new NotelyUser
-                    {
-                        UserName = "dev",
-                        Email = "dev@app.com"
-                    }, "LeleFafa12_").Result;
-                }
             }
             else
             {

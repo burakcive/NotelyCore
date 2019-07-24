@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using NotelyCore.Persistence.Identity;
+using NotelyCore.Domain.Identity;
 
 namespace NotelyCore.Web.Pages
 {

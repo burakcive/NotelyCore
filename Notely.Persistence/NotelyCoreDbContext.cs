@@ -2,6 +2,7 @@
 using NotelyCore.Persistence.Identity;
 using NotelyCore.Domain;
 using System;
+using NotelyCore.Domain.Identity;
 
 namespace NotelyCore.Persistence
 {

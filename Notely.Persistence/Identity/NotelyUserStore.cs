@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using NotelyCore.Domain.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using NotelyCore.Domain.Identity;
 using System.Threading;
 using System.Threading.Tasks;
 
