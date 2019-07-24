@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Notely.Persistence.Identity
+namespace NotelyCore.Persistence.Identity
 {
     [Table("UserRole")]
     public class UserRole

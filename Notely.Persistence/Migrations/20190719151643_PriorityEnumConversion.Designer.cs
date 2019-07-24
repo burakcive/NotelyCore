@@ -4,10 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Notely.Persistence;
 
-namespace Notely.Persistence.Migrations
+namespace NotelyCore.Persistence.Migrations
 {
     [DbContext(typeof(NotelyCoreDbContext))]
     [Migration("20190719151643_PriorityEnumConversion")]

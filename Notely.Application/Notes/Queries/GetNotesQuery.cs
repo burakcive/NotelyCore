@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Notely.Persistence;
+using NotelyCore.Persistence;
 using NotelyCore.Domain;
 using System.Collections.Generic;
 using System.Linq;

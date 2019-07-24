@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Notely.Persistence;
+using NotelyCore.Persistence;
 using NotelyCore.Domain;
 using System;
 using System.Collections.Generic;

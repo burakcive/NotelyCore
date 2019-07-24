@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Notely.Persistence.Identity;
+using NotelyCore.Persistence.Identity;
 
 namespace NotelyCore.Web.Pages
 {

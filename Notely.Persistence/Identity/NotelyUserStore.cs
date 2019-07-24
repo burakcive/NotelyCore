@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Notely.Persistence.Identity
+namespace NotelyCore.Persistence.Identity
 {
     public class UserStore : IUserStore<NotelyUser>, IUserPasswordStore<NotelyUser>
     {

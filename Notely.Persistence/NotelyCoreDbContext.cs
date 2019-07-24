@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Notely.Persistence.Identity;
+using NotelyCore.Persistence.Identity;
 using NotelyCore.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Notely.Persistence
+namespace NotelyCore.Persistence
 {
     public class NotelyCoreDbContext : DbContext
     {

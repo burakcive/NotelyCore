@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Notely.Persistence.Identity
+namespace NotelyCore.Persistence.Identity
 {
     public  class NotelyUser
     {

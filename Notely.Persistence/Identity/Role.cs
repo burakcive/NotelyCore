@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Notely.Persistence.Identity
+namespace NotelyCore.Persistence.Identity
 {
     public class Role
     {

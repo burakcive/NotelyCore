@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Notely.Persistence.Migrations
+namespace NotelyCore.Persistence.Migrations
 {
     public partial class Identity : Migration
     {

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Notely.Persistence.Identity
+namespace NotelyCore.Persistence.Identity
 {
     public class NotelyRoleStore : IRoleStore<UserRole>
     {

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Notely.Persistence;
+using NotelyCore.Persistence;
 
-namespace Notely.Persistence.Migrations
+namespace NotelyCore.Persistence.Migrations
 {
     [DbContext(typeof(NotelyCoreDbContext))]
     partial class NotelyCoreDbContextModelSnapshot : ModelSnapshot
