@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notely.Application.Notes.Commands;
 using Notely.Application.Notes.Queries;
@@ -7,6 +8,7 @@ using NotelyCore.Domain;
 
 namespace NotelyCore.Web.Pages
 {
+    [Authorize]
     public class IndexModel : BasePageModel
     {
         public IEnumerable<Note> Notes { get; set; }

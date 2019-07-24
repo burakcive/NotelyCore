@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Notely.Application.Notes.Queries;
 using Notely.Persistence;
-using NotelyCore.Domain;
 
 namespace NotelyCore.Web
 {
@@ -37,9 +31,8 @@ namespace NotelyCore.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMediatR(typeof(GetNotesQueryHandler).GetTypeInfo().Assembly);
-
-            //services.AddScoped<IRepository<Note>, NoteRepository>();
+            services.AddMediatR(typeof(GetNotesQueryHandler).GetTypeInfo().Assembly);     
+            
             services.AddDbContextPool<NotelyCoreDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:NotelyDb"]);
@@ -69,6 +62,7 @@ namespace NotelyCore.Web
             app.UseNodeModules(env);
             app.UseCookiePolicy();
 
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
