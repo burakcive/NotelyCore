@@ -47,10 +47,8 @@ namespace NotelyCore.Web
                 options.UseSqlServer(Configuration["ConnectionStrings:NotelyDb"]);
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.AddIdentity<NotelyUser, UserRole>()
-                .AddDefaultTokenProviders();
+            .AddDefaultTokenProviders();
 
             services.AddTransient<IUserStore<NotelyUser>, UserStore>();
             services.AddTransient<IRoleStore<UserRole>, NotelyRoleStore>();
@@ -60,6 +58,13 @@ namespace NotelyCore.Web
                 options.LoginPath = "/Login";
                 options.LogoutPath = "/Logout";
             });
+
+            services.AddMvc().AddRazorPagesOptions(options =>
+             {
+                 options.Conventions.AuthorizePage("/Index");
+                 options.Conventions.AuthorizePage("/Notely/Edit");
+             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        
             services.AddAntiforgery(options => options.HeaderName = "MY-XSRF-TOKEN");
         }
 
@@ -76,7 +81,7 @@ namespace NotelyCore.Web
                     {
                         UserName = "dev",
                         Email = "dev@app.com"
-                    }, "Gandalf99_").Result;
+                    }, "LeleFafa12_").Result;
                 }
             }
             else
@@ -87,6 +92,7 @@ namespace NotelyCore.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseNodeModules(env);
             app.UseCookiePolicy();
