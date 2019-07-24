@@ -5,6 +5,7 @@ using NotelyCore.Domain;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NotelyCore.Domain.Identity;
 
 namespace Notely.Application.Notes.Commands
 {
@@ -16,6 +17,8 @@ namespace Notely.Application.Notes.Commands
         public PriortyType Priorty { get; set; }
 
         public bool IsAddMode => NoteId == 0;
+
+        public NotelyUser User { get; set; }
     }
 
     public class UpsertNoteCommandHandler : IRequestHandler<UpsertNoteCommand, Unit>
@@ -46,6 +49,7 @@ namespace Notely.Application.Notes.Commands
             if (request.IsAddMode)
             {
                 noteToUpsert.CreatedOn = DateTime.UtcNow;
+                noteToUpsert.User = request.User;
                 dbContext.Notes.Add(noteToUpsert);
             }
 
