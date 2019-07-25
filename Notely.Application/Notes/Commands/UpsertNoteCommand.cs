@@ -18,7 +18,7 @@ namespace Notely.Application.Notes.Commands
 
         public bool IsAddMode => NoteId == 0;
 
-        public NotelyUser User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 
     public class UpsertNoteCommandHandler : IRequestHandler<UpsertNoteCommand, Unit>

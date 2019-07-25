@@ -12,9 +12,9 @@ namespace NotelyCore.Web.Pages
 {
     public class IndexModel : BasePageModel
     {
-        private readonly SignInManager<NotelyUser> signInManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public IndexModel(SignInManager<NotelyUser> signInManager)
+        public IndexModel(SignInManager<ApplicationUser> signInManager)
         {
             this.signInManager = signInManager;
         }

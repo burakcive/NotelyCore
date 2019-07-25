@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotelyCore.Persistence;
 
 namespace NotelyCore.Persistence.Migrations
 {
     [DbContext(typeof(NotelyCoreDbContext))]
-    partial class NotelyCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190725154428_DefaultIdentity")]
+    partial class DefaultIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,11 +200,7 @@ namespace NotelyCore.Persistence.Migrations
 
                     b.Property<string>("Subject");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("NoteId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Notes");
 
@@ -211,7 +209,7 @@ namespace NotelyCore.Persistence.Migrations
                         {
                             NoteId = 1,
                             Body = "Body 1",
-                            CreatedOn = new DateTime(2019, 7, 25, 18, 46, 50, 746, DateTimeKind.Local).AddTicks(2608),
+                            CreatedOn = new DateTime(2019, 7, 25, 18, 44, 28, 614, DateTimeKind.Local).AddTicks(8416),
                             Priority = 2,
                             Subject = "Note 1"
                         },
@@ -219,7 +217,7 @@ namespace NotelyCore.Persistence.Migrations
                         {
                             NoteId = 2,
                             Body = "Body 2",
-                            CreatedOn = new DateTime(2019, 7, 25, 18, 46, 50, 747, DateTimeKind.Local).AddTicks(4261),
+                            CreatedOn = new DateTime(2019, 7, 25, 18, 44, 28, 615, DateTimeKind.Local).AddTicks(7816),
                             Priority = 1,
                             Subject = "Note 2"
                         },
@@ -227,7 +225,7 @@ namespace NotelyCore.Persistence.Migrations
                         {
                             NoteId = 3,
                             Body = "Body 3",
-                            CreatedOn = new DateTime(2019, 7, 25, 18, 46, 50, 747, DateTimeKind.Local).AddTicks(4272),
+                            CreatedOn = new DateTime(2019, 7, 25, 18, 44, 28, 615, DateTimeKind.Local).AddTicks(7829),
                             Priority = 0,
                             Subject = "Note 3"
                         });
@@ -276,13 +274,6 @@ namespace NotelyCore.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("NotelyCore.Domain.Note", b =>
-                {
-                    b.HasOne("NotelyCore.Domain.Identity.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

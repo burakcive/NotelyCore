@@ -12,7 +12,7 @@ namespace Notely.Application.Notes.Queries
 {
     public class GetNotesQuery : IRequest<List<Note>>
     {
-        public NotelyUser User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 
     public class GetNotesQueryHandler : IRequestHandler<GetNotesQuery, List<Note>>

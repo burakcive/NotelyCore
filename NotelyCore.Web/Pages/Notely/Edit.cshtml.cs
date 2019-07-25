@@ -15,12 +15,12 @@ namespace NotelyCore.Web.Pages.Notely
 
     public class EditModel : BasePageModel
     {
-        private readonly SignInManager<NotelyUser> signInManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         [BindProperty(SupportsGet = true)]
         public Note Note { get; set; }
 
-        public EditModel(SignInManager<NotelyUser> signInManager)
+        public EditModel(SignInManager<ApplicationUser> signInManager)
         {
             this.signInManager = signInManager;
         }

@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Notely.Application.Notes.Queries;
+using Notely.Persistence.Identity;
 using NotelyCore.Domain.Identity;
 using NotelyCore.Persistence;
-using NotelyCore.Persistence.Identity;
 
 namespace NotelyCore.Web
 {
@@ -42,11 +42,10 @@ namespace NotelyCore.Web
                 options.UseSqlServer(Configuration["ConnectionStrings:NotelyDb"]);
             });
 
-            services.AddIdentity<NotelyUser, UserRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<NotelyCoreDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddTransient<IUserStore<NotelyUser>, NotelyUserStore>();
-            services.AddTransient<IRoleStore<UserRole>, NotelyRoleStore>();
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
@@ -64,7 +63,7 @@ namespace NotelyCore.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SignInManager<NotelyUser> signInManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -79,6 +78,9 @@ namespace NotelyCore.Web
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
+
+            IdentityDataInitializer.SeedData(userManager, roleManager);
+
             app.UseStaticFiles();
             app.UseNodeModules(env);
             app.UseCookiePolicy();

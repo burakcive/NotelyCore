@@ -1,26 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using NotelyCore.Domain.Identity;
-using NotelyCore.Persistence.Identity;
 
 namespace NotelyCore.Web.Pages
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<NotelyUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<RegisterModel> _logger;
 
         public RegisterModel(
-            IUserStore<NotelyUser> userManager,
-            SignInManager<NotelyUser> signInManager,
+            IUserStore<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger)
         {
             _signInManager = signInManager;
@@ -60,7 +57,7 @@ namespace NotelyCore.Web.Pages
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new NotelyUser { UserName = Input.UserName, Email = Input.UserName};
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.UserName};
                 var result = await _signInManager.UserManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

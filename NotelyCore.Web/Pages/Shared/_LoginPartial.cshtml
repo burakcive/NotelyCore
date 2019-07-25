@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using NotelyCore.Domain.Identity
 
-@inject SignInManager<NotelyUser> SignInManager
-@inject UserManager<NotelyUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
