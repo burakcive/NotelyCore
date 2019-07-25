@@ -6,6 +6,8 @@
 
 @Html.AntiForgeryToken()
 
+<link href="~/node_modules/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet" />
+
 <div class="container container-fluid">
 
     <a asp-page="./Notely/Edit" class="btn btn-primary">Add New</a>
@@ -23,4 +25,5 @@
 @section Scripts
 {
     <script src="~/js/main.js"></script>
+    <script src="~/node_modules/jquery-confirm/dist/jquery-confirm.min.js"></script>
 }

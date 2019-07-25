@@ -1,0 +1,30 @@
+﻿@page
+@model NotelyCore.Web.Pages.Links.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<link href="~/node_modules/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet" />
+
+@Html.AntiForgeryToken()
+
+<div class="container container-fluid">
+
+    <button class="btn btn-primary" onclick="addNewLink()">Add New Super Link</button>
+    <hr />
+    <div class="row">
+        @foreach (var link in Model.Links)
+        {
+            <div class="col-md-12">
+                <partial name="_LinkSummaryItem" model="link" />
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/links.js"></script>
+    <script src="~/node_modules/jquery-confirm/dist/jquery-confirm.min.js"></script>
+}

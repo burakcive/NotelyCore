@@ -13,6 +13,5 @@ namespace NotelyCore.Domain
         public PriortyType Priority { get; set; }
 
         public ApplicationUser User { get; set; }
-
     }
 }
