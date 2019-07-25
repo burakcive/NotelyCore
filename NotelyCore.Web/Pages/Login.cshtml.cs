@@ -39,6 +39,7 @@ namespace NotelyCore.Web.Pages
         public class InputModel
         {
             [Required]
+            [Display(Name = "User Name")]
             public string UserName { get; set; }
 
             [Required]

@@ -57,7 +57,7 @@ namespace NotelyCore.Web
             services.AddMvc().AddRazorPagesOptions(options =>
              {
                  options.Conventions.AuthorizePage("/Index");
-                 options.Conventions.AuthorizePage("/Notely/Edit");
+                 options.Conventions.AuthorizeFolder("/Notely");
              }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAntiforgery(options => options.HeaderName = "MY-XSRF-TOKEN");

@@ -25,10 +25,10 @@ namespace NotelyCore.Persistence
                         new Note { Subject = "Note 2", Body = "Body 2", CreatedOn = DateTime.Now, NoteId = 2, Priority = PriortyType.Neutral },
                         new Note { Subject = "Note 3", Body = "Body 3", CreatedOn = DateTime.Now, NoteId = 3, Priority = PriortyType.Low });
 
-            modelBuilder
-                .Entity<Note>()
-                .Property(n => n.Priority)
-                .HasConversion<string>();
+            //modelBuilder
+            //    .Entity<Note>()
+            //    .Property(n => n.Priority)
+            //    .HasConversion<int>();
 
             base.OnModelCreating(modelBuilder);
         }

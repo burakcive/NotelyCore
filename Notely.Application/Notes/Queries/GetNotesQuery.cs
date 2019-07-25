@@ -28,7 +28,9 @@ namespace Notely.Application.Notes.Queries
         {
             return await dbContext.Notes
                 .Where(n=> n.User == request.User)
-                .OrderBy(n=>n.Priority).ToListAsync();
+                .OrderByDescending(n=>n.Priority)
+                .ThenByDescending(n=> n.CreatedOn)
+                .ToListAsync();
         }
     }
 }

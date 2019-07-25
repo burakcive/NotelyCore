@@ -1,15 +1,16 @@
 ﻿@using NotelyCore.Domain
 @model Note
 
+
 <div class="card">
-    <div class="card-header container-fluid">
+    <div class="card-header container-fluid header-@Model.Priority">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-sm-9">
                 <h3>@Model.Subject</h3>
                 <span>@Model.Priority</span>
                 <small>@Model.CreatedOn.ToLocalTime()</small>
             </div>
-            <div class="col-md-2 float-right">
+            <div class="col-sm-3">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a class="btn btn-primary"
                        asp-page="./Notely/Edit"

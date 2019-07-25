@@ -10,10 +10,14 @@
 
     <a asp-page="./Notely/Edit" class="btn btn-primary">Add New</a>
     <hr />
-    @foreach (var note in Model.Notes)
-    {
-        <partial name="./Notely/_NoteSummaryItem" model="note" />
-    }
+    <div class="row">
+        @foreach (var note in Model.Notes)
+        {
+            <div class="col-md-6">
+                <partial name="./Notely/_NoteSummaryItem" model="note" />
+            </div>
+        }
+    </div>
 </div>
 
 @section Scripts
