@@ -1,17 +1,18 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Notely.Persistence;
+using NotelyCore.Persistence;
 using NotelyCore.Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NotelyCore.Domain.Identity;
 
 namespace Notely.Application.Notes.Queries
 {
     public class GetNotesQuery : IRequest<List<Note>>
     {
-      
+        public NotelyUser User { get; set; }
     }
 
     public class GetNotesQueryHandler : IRequestHandler<GetNotesQuery, List<Note>>
@@ -25,7 +26,9 @@ namespace Notely.Application.Notes.Queries
 
         public async Task<List<Note>> Handle(GetNotesQuery request, CancellationToken cancellationToken)
         {
-            return await dbContext.Notes.OrderBy(n=>n.Priority).ToListAsync();
+            return await dbContext.Notes
+                .Where(n=> n.User == request.User)
+                .OrderBy(n=>n.Priority).ToListAsync();
         }
     }
 }

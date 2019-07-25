@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NotelyCore.Persistence.Identity;
 using NotelyCore.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using NotelyCore.Domain.Identity;
 
-namespace Notely.Persistence
+namespace NotelyCore.Persistence
 {
     public class NotelyCoreDbContext : DbContext
     {
@@ -13,6 +13,9 @@ namespace Notely.Persistence
         }
 
         public DbSet<Note> Notes { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<NotelyUser> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

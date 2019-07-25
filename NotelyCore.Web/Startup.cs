@@ -3,12 +3,15 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Notely.Application.Notes.Queries;
-using Notely.Persistence;
+using NotelyCore.Domain.Identity;
+using NotelyCore.Persistence;
+using NotelyCore.Persistence.Identity;
 
 namespace NotelyCore.Web
 {
@@ -31,20 +34,37 @@ namespace NotelyCore.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMediatR(typeof(GetNotesQueryHandler).GetTypeInfo().Assembly);     
-            
+            services.AddMediatR(typeof(GetNotesQueryHandler).GetTypeInfo().Assembly);
+
+            //services.AddScoped<IRepository<Note>, NoteRepository>();
             services.AddDbContextPool<NotelyCoreDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:NotelyDb"]);
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddIdentity<NotelyUser, UserRole>()
+            .AddDefaultTokenProviders();
+
+            services.AddTransient<IUserStore<NotelyUser>, NotelyUserStore>();
+            services.AddTransient<IRoleStore<UserRole>, NotelyRoleStore>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+            });
+
+            services.AddMvc().AddRazorPagesOptions(options =>
+             {
+                 options.Conventions.AuthorizePage("/Index");
+                 options.Conventions.AuthorizePage("/Notely/Edit");
+             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAntiforgery(options => options.HeaderName = "MY-XSRF-TOKEN");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SignInManager<NotelyUser> signInManager)
         {
             if (env.IsDevelopment())
             {
@@ -58,11 +78,11 @@ namespace NotelyCore.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseNodeModules(env);
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
             app.UseMvc();
         }
     }

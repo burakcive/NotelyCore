@@ -3,15 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Migrations;
 using NotelyCore.Persistence;
 
 namespace NotelyCore.Persistence.Migrations
 {
     [DbContext(typeof(NotelyCoreDbContext))]
-    partial class NotelyCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190724183329_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +20,7 @@ namespace NotelyCore.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("NotelyCore.Domain.Identity.NotelyUser", b =>
+            modelBuilder.Entity("Notely.Persistence.Identity.NotelyUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +52,7 @@ namespace NotelyCore.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NotelyCore.Domain.Identity.Role", b =>
+            modelBuilder.Entity("Notely.Persistence.Identity.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +66,7 @@ namespace NotelyCore.Persistence.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("NotelyCore.Domain.Identity.UserRole", b =>
+            modelBuilder.Entity("Notely.Persistence.Identity.UserRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,11 +102,7 @@ namespace NotelyCore.Persistence.Migrations
 
                     b.Property<string>("Subject");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("NoteId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Notes");
 
@@ -114,7 +111,7 @@ namespace NotelyCore.Persistence.Migrations
                         {
                             NoteId = 1,
                             Body = "Body 1",
-                            CreatedOn = new DateTime(2019, 7, 25, 1, 9, 36, 344, DateTimeKind.Local).AddTicks(4883),
+                            CreatedOn = new DateTime(2019, 7, 24, 21, 33, 28, 399, DateTimeKind.Local).AddTicks(7225),
                             Priority = "Critical",
                             Subject = "Note 1"
                         },
@@ -122,7 +119,7 @@ namespace NotelyCore.Persistence.Migrations
                         {
                             NoteId = 2,
                             Body = "Body 2",
-                            CreatedOn = new DateTime(2019, 7, 25, 1, 9, 36, 349, DateTimeKind.Local).AddTicks(4886),
+                            CreatedOn = new DateTime(2019, 7, 24, 21, 33, 28, 403, DateTimeKind.Local).AddTicks(7227),
                             Priority = "Neutral",
                             Subject = "Note 2"
                         },
@@ -130,30 +127,23 @@ namespace NotelyCore.Persistence.Migrations
                         {
                             NoteId = 3,
                             Body = "Body 3",
-                            CreatedOn = new DateTime(2019, 7, 25, 1, 9, 36, 349, DateTimeKind.Local).AddTicks(4886),
+                            CreatedOn = new DateTime(2019, 7, 24, 21, 33, 28, 403, DateTimeKind.Local).AddTicks(7227),
                             Priority = "Low",
                             Subject = "Note 3"
                         });
                 });
 
-            modelBuilder.Entity("NotelyCore.Domain.Identity.UserRole", b =>
+            modelBuilder.Entity("Notely.Persistence.Identity.UserRole", b =>
                 {
-                    b.HasOne("NotelyCore.Domain.Identity.Role", "Role")
+                    b.HasOne("Notely.Persistence.Identity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NotelyCore.Domain.Identity.NotelyUser", "User")
+                    b.HasOne("Notely.Persistence.Identity.NotelyUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("NotelyCore.Domain.Note", b =>
-                {
-                    b.HasOne("NotelyCore.Domain.Identity.NotelyUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

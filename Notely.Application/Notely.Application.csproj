@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Notely.Persistence\Notely.Persistence.csproj" />
-    <ProjectReference Include="..\NotelyCore.Domain\NotelyCore.Domain.csproj" />
   </ItemGroup>
 
 </Project>

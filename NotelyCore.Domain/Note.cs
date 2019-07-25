@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotelyCore.Domain.Identity;
+using System;
 
 namespace NotelyCore.Domain
 {
@@ -10,5 +11,7 @@ namespace NotelyCore.Domain
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public PriortyType Priority{ get; set; }
+
+        public NotelyUser User { get; set; }
     }
 }
