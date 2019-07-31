@@ -19,8 +19,9 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <!--navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3* -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Notely Notes</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,19 +31,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Links/Index">My Super Links</a>
-                        </li>
-                        <li class="nav-item">
-
+                            <a class="nav-link" asp-area="" asp-page="/Links/Index">My Super Links</a>
                         </li>
                     </ul>
-
                 </div>
                 <partial name="_LoginPartial">
             </div>
@@ -54,7 +45,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-dark">
         <div class="container">
             &copy; 2019 - NotelyCore- <a asp-area="" asp-page="/">Notes</a>
         </div>
