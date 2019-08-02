@@ -13,38 +13,51 @@ using NotelyCore.Domain.Identity;
 
 namespace NotelyCore.Web.Pages.Links
 {
-    [Authorize]
     public class IndexModel : BasePageModel
     {
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public IndexModel(SignInManager<ApplicationUser> signInManager)
+        public IndexModel(UserManager<ApplicationUser> userManager)
         {
-            this.signInManager = signInManager;
+            this.userManager = userManager;
         }
 
         public IEnumerable<Link> Links { get; set; }
 
         public async Task OnGet()
         {
-            var signedInUser = await signInManager.UserManager.GetUserAsync(HttpContext.User);
+            var signedInUser = await userManager.GetUserAsync(HttpContext.User);
             Links = await Mediator.Send(
-                new GetLinksQuery
-                {
-                    User = signedInUser
-                }
+                new GetLinksQuery { User = signedInUser }
+            );
+        }
+
+        public async Task OnPost()
+        {
+            var signedInUser = await userManager.GetUserAsync(HttpContext.User);
+
+            Links = await Mediator.Send(
+                  new GetLinksQuery { User = signedInUser }
             );
         }
 
         public async Task<IActionResult> OnPostAddLink(string url, string description)
         {
-            var signedInUser = await signInManager.UserManager.GetUserAsync(HttpContext.User);
+            var signedInUser = await userManager.GetUserAsync(HttpContext.User);
 
-            await Mediator.Send(new UpsertLinkCommand {
+            await Mediator.Send(new UpsertLinkCommand
+            {
                 Description = description,
                 Url = url,
                 User = signedInUser
             });
+
+            return new JsonResult(new { succeeded = true });
+        }
+
+        public async Task<IActionResult> OnPostLinkItemDelete(int linkId)
+        {
+            await Mediator.Send(new DeleteLinkCommand { LinkId = linkId });
 
             return new JsonResult(new { succeeded = true });
         }

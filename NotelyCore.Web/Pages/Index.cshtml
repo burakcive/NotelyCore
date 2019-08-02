@@ -2,6 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Notely Notes";
+    var NoteCount = Model.Notes.Count() + 2;
 }
 
 @Html.AntiForgeryToken()
@@ -9,7 +10,6 @@
 <link href="~/node_modules/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet" />
 
 <div class="container container-fluid">
-
     <a asp-page="./Notely/Edit" class="btn btn-primary">Add New</a>
     <hr />
     <div class="row">
@@ -20,6 +20,10 @@
             </div>
         }
     </div>
+    <form method="post">
+        <input type="hidden" name="NumberOfNotes" value="@NoteCount"  />
+        <button type="submit" class="btn btn-success">Load More</button>
+    </form>
 </div>
 
 @section Scripts

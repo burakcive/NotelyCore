@@ -1,0 +1,37 @@
+﻿@page "{linkId:int?}"
+@model NotelyCore.Web.Pages.Links.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    var IsAddMode = TempData.ContainsKey("IsAddMode") && (bool)TempData["IsAddMode"];
+}
+
+@if (IsAddMode)
+{
+    <h2> Create a Link</h2>
+}
+else
+{
+    <h2> Edit the Link</h2>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Link.LinkId" />
+    <div class="form-group">
+        <label asp-for="Link.Url"></label>
+        <input class="form-control" asp-for="Link.Url" />
+        <span class="text-danger" asp-validation-for="Link.Url"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Link.Description"></label>
+        <textarea class="form-control" asp-for="Link.Description"></textarea>
+        <span class="text-danger" asp-validation-for="Link.Description"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Link.LevelOfImportance"></label>
+        <input class="form-control" asp-for="Link.LevelOfImportance" />
+        <span class="text-danger" asp-validation-for="Link.LevelOfImportance"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-secondary" asp-page="./Index">Discard</a>
+</form>

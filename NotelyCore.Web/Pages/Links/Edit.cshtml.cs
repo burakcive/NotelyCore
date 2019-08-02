@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Notely.Application.Notes.Commands;
-using Notely.Application.Notes.Queries;
+using Notely.Application.Links.Commands;
+using Notely.Application.Links.Queries;
 using NotelyCore.Domain;
 using NotelyCore.Domain.Identity;
 
-namespace NotelyCore.Web.Pages.Notely
+namespace NotelyCore.Web.Pages.Links
 {
-
     public class EditModel : BasePageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -19,18 +18,19 @@ namespace NotelyCore.Web.Pages.Notely
         }
 
         [BindProperty(SupportsGet = true)]
-        public Note Note { get; set; }
+        public Link Link { get; set; }
 
+ 
 
-        public async Task OnGet(int? noteId)
+        public async Task OnGet(int? linkId)
         {
-            if (noteId.HasValue)
+            if (linkId.HasValue)
             {
-                Note = await Mediator.Send(new GetNoteByIdQuery(noteId.Value));
+                Link = await Mediator.Send(new GetLinkByIdQuery { LinkId = linkId.Value });
             }
             else
             {
-                Note = new Note();
+                Link = new Link();
                 TempData["IsAddMode"] = true;
             }
         }
@@ -39,18 +39,16 @@ namespace NotelyCore.Web.Pages.Notely
         {
             var signedInUser = await userManager.GetUserAsync(HttpContext.User);
 
-            await Mediator.Send(new UpsertNoteCommand
+            await Mediator.Send(new UpsertLinkCommand
             {
-                Body = Note.Body,
-                Subject = Note.Subject,
-                NoteId = Note.NoteId,
-                Priorty = Note.Priority,
+                LinkId = Link.LinkId,
+                Description = Link.Description,
+                LevelOfImportance = Link.LevelOfImportance,
+                Url = Link.Url,
                 User = signedInUser
             });
 
-            return RedirectToPage("../Index");
+            return RedirectToPage("./Index");
         }
-
-
     }
 }

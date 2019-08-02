@@ -8,12 +8,16 @@
     </div>
     <div class="col-md-3">
         <div class="btn-group" role="group">
-            <button class="btn btn-primary">
+            <a class="btn btn-primary"
+               asp-page="./Edit"
+               asp-route-linkId=@Model.LinkId>
                 <i class="fa fa-edit"></i>
-            </button>
-            <button class="btn btn-primary">
+            </a>
+            <i class="btn btn-primary"
+               onclick="deleteLink(this)"
+               data-link-id="@Model.LinkId">
                 <i class="fa fa-trash"></i>
-            </button>
+            </i>
         </div>
     </div>
 </div>
