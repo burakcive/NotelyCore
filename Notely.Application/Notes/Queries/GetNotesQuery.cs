@@ -7,17 +7,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NotelyCore.Domain.Identity;
+using Notely.Application.Notes.Models;
 
 namespace Notely.Application.Notes.Queries
 {
-    public class GetNotesQuery : IRequest<List<Note>>
+    public class GetNotesQuery : IRequest<NotesViewModel>
     {
         public ApplicationUser User { get; set; }
-        public int StartPage { get; set; } = 0;
-        public int PageCount { get; set; } = 10;
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; } = 10;
     }
 
-    public class GetNotesQueryHandler : IRequestHandler<GetNotesQuery, List<Note>>
+    public class GetNotesQueryHandler : IRequestHandler<GetNotesQuery, NotesViewModel>
     {
         private readonly NotelyCoreDbContext dbContext;
 
@@ -26,15 +27,21 @@ namespace Notely.Application.Notes.Queries
             this.dbContext = dbContext;
         }
 
-        public async Task<List<Note>> Handle(GetNotesQuery request, CancellationToken cancellationToken)
+        public async Task<NotesViewModel> Handle(GetNotesQuery request, CancellationToken cancellationToken)
         {
-            return await dbContext.Notes
+            var returnModel = new NotesViewModel
+            {
+                TotalNotes = await dbContext.Notes.CountAsync(n => n.User == request.User),
+                Notes = await dbContext.Notes
                 .Where(n => n.User == request.User)
-                .Skip(request.StartPage)
-                .Take(request.PageCount)
+                .Skip((request.CurrentPage -1) * request.PageSize)
+                .Take(request.PageSize)
                 .OrderByDescending(n => n.Priority)
                 .ThenByDescending(n => n.CreatedOn)
-                .ToListAsync();
+                .ToListAsync()
+            };
+
+            return returnModel;
         }
     }
 }

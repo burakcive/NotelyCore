@@ -1,23 +1,22 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NotelyCore.Persistence;
-using NotelyCore.Domain;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NotelyCore.Domain.Identity;
+using Notely.Application.Links.Models;
 
 namespace Notely.Application.Links.Queries
 {
-    public class GetLinksQuery : IRequest<List<Link>>
+    public class GetLinksQuery : IRequest<LinksViewModel>
     {
         public ApplicationUser User { get; set; }
-        public int StartPage { get; set; } = 0;
-        public int PageCount { get; set; } = 10;
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; } = 10;
     }
 
-    public class GetLinksQueryHandler : IRequestHandler<GetLinksQuery, List<Link>>
+    public class GetLinksQueryHandler : IRequestHandler<GetLinksQuery, LinksViewModel>
     {
         private readonly NotelyCoreDbContext dbContext;
 
@@ -26,14 +25,20 @@ namespace Notely.Application.Links.Queries
             this.dbContext = dbContext;
         }
 
-        public async Task<List<Link>> Handle(GetLinksQuery request, CancellationToken cancellationToken)
+        public async Task<LinksViewModel> Handle(GetLinksQuery request, CancellationToken cancellationToken)
         {
-            return await dbContext.Links
+            var returnModel = new LinksViewModel
+            {
+                TotalLinks = await dbContext.Links.CountAsync(n => n.User == request.User),
+                Links = await dbContext.Links
                 .Where(n => n.User == request.User)
-                .Skip(request.StartPage)
-                .Take(request.PageCount)
+                .Skip((request.CurrentPage - 1) * request.PageSize)
+                .Take(request.PageSize)
                 .OrderByDescending(n => n.LevelOfImportance)
-                .ToListAsync();
+                .ToListAsync()
+            };
+
+            return returnModel;
         }
     }
 }

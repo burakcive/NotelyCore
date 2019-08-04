@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "{currentpage:int?}"
+
 @model NotelyCore.Web.Pages.Links.IndexModel
 @{
     ViewData["Title"] = "Index";
@@ -11,16 +12,37 @@
 
 <div class="container container-fluid">
 
-    <button class="btn btn-primary" onclick="addNewLink()">Add New Super Link</button>
+    <div class="float-left">
+        <button class="btn btn-primary" onclick="addNewLink()">Add New Super Link</button>
+    </div>
+    <div class="float-right">
+        <ul class="pagination">
+            @if (Model.ShowPrevious)
+            {
+                <li class="page-item">
+                    <a asp-page="/Links/Index" asp-route-currentpage="@(Model.CurrentPage -1)" class="page-link">Previous</a>
+                </li>
+            }
+            @if (Model.ShowNext)
+            {
+                <li class="page-item">
+                    <a asp-page="/Links/Index" asp-route-currentpage="@(Model.CurrentPage + 1)" class="page-link">Next</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="clearfix"></div>
     <hr />
     <div class="row">
-        @foreach (var link in Model.Links)
+        @foreach (var link in Model.LinksViewModel.Links)
         {
             <div class="col-md-12">
                 <partial name="_LinkSummaryItem" model="link" />
             </div>
         }
     </div>
+
+
 </div>
 
 @section Scripts

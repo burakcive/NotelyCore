@@ -68,12 +68,18 @@ body {
     background-color: #a5e0c0;
 }
 
-.card
-{
-    margin-bottom:20px;
+.card {
+    margin-bottom: 20px;
+}
+
+.card-body {
+    background-color: #f5ef86;
 }
 
 .container {
     max-width: 1600px;
 }
 
+.clearfix{
+    height:33px;
+}

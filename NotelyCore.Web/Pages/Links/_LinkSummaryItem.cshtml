@@ -2,11 +2,11 @@
 @model Link
 
 <div class="row">
-    <div class="col-md-9">
-        <a href="@Model.Url">@Model.Url</a>
+    <div class="col-md-11">
+        <a target="_blank" href="@Model.Url">@Model.Url</a>
         <p>@Model.Description</p>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-1">
         <div class="btn-group" role="group">
             <a class="btn btn-primary"
                asp-page="./Edit"

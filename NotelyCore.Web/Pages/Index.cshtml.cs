@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Notely.Application.Notes.Commands;
+using Notely.Application.Notes.Models;
 using Notely.Application.Notes.Queries;
 using NotelyCore.Domain;
 using NotelyCore.Domain.Identity;
@@ -18,36 +20,32 @@ namespace NotelyCore.Web.Pages
         {
             this.userManager = userManager;
         }
-        public IEnumerable<Note> Notes { get; set; }
+        public NotesViewModel NotesViewModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int NumberOfNotes { get; set; }
+        public int CurrentPage { get; set; } = 1;
+        public int Count { get; set; } 
+        public int PageSize { get; set; } = 10;
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+
+
+        public bool ShowPrevious => CurrentPage > 1;
+        public bool ShowNext => CurrentPage < TotalPages;
+
 
         public async Task OnGet()
         {
             var signedInUser = await userManager.GetUserAsync(HttpContext.User);
-            Notes = await Mediator.Send(
+            NotesViewModel = await Mediator.Send(
                 new GetNotesQuery
                 {
                     User = signedInUser,
-                    PageCount = 2
+                    CurrentPage = CurrentPage,
+                    PageSize = PageSize
                 }
             );
 
-        }
-
-        public async Task OnPost()
-        {
-            var signedInUser = await userManager.GetUserAsync(HttpContext.User);
-
-            Notes = await Mediator.Send(
-                new GetNotesQuery
-                {
-                    User = signedInUser,
-                    PageCount = NumberOfNotes
-                }
-            );
-
+            Count = NotesViewModel.TotalNotes;
         }
 
         public async Task<IActionResult> OnPostNoteItemDelete(int noteId)
