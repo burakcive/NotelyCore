@@ -34,10 +34,10 @@ namespace Notely.Application.Notes.Queries
                 TotalNotes = await dbContext.Notes.CountAsync(n => n.User == request.User),
                 Notes = await dbContext.Notes
                 .Where(n => n.User == request.User)
-                .Skip((request.CurrentPage -1) * request.PageSize)
-                .Take(request.PageSize)
                 .OrderByDescending(n => n.Priority)
                 .ThenByDescending(n => n.CreatedOn)
+                .Skip((request.CurrentPage -1) * request.PageSize)
+                .Take(request.PageSize)
                 .ToListAsync()
             };
 

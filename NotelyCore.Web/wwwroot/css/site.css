@@ -83,3 +83,8 @@ body {
 .clearfix{
     height:33px;
 }
+
+.note-body-text {
+    white-space: pre-wrap;
+    word-wrap: break-word
+}
