@@ -1,0 +1,48 @@
+﻿@page "{currentpage:int?}"
+@model IndexModel
+@{
+    ViewData["Title"] = "Notely Notes";
+}
+
+@Html.AntiForgeryToken()
+
+<link href="~/node_modules/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet" />
+
+<div class="container container-fluid">
+    <div class="float-left">
+        <a asp-page="./Notely/Edit" class="btn btn-primary">Add New</a>
+    </div>
+    <div class="float-right">
+        <ul class="pagination">
+            @if (Model.ShowPrevious)
+            {
+                <li class="page-item">
+                    <a asp-page="/Index" asp-route-currentpage="@(Model.CurrentPage -1)" class="page-link">Previous</a>
+                </li>
+            }
+            @if (Model.ShowNext)
+            {
+                <li class="page-item">
+                    <a asp-page="/Index" asp-route-currentpage="@(Model.CurrentPage + 1)" class="page-link">Next</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="clearfix"></div>
+    <hr />
+    <div class="row">
+        @foreach (var note in Model.NotesViewModel.Notes)
+        {
+            <div class="col-4">
+                <partial name="./Notely/_NoteSummaryItem" model="note" />
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/main.js"></script>
+    <script src="~/node_modules/jquery-confirm/dist/jquery-confirm.min.js"></script>
+}
